@@ -1,0 +1,80 @@
+.item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 10px;
+  grid-template-areas:
+    "face name"
+    "face size"
+    "face status";
+  align-items: center;
+  border: #ccc 1px dashed;
+  padding: 10px;
+  padding-left: 0;
+  background-color: #fff;
+  border-radius: 8px;
+
+  & > :nth-of-type(1) {
+    grid-area: face;
+    align-self: stretch;
+    padding: 10px;
+    background-origin: content-box;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  & > :nth-of-type(2) {
+    grid-area: name;
+  }
+  & > :nth-of-type(3) {
+    grid-area: size;
+  }
+  & > :nth-of-type(4) {
+    grid-area: status;
+  }
+  & > :nth-of-type(2),
+  & > :nth-of-type(3),
+  & > :nth-of-type(4) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 0;
+  }
+  & > :nth-of-type(4) {
+    display: flex;
+    justify-content: stretch;
+  }
+}
+
+.progressBarBg {
+  flex: 1;
+  display: flex;
+  margin-left: 10px;
+}
+.progressBar {
+  max-width: 100%;
+  background-color: lighten(#00a, 30%);
+  transition-duration: 0.1s;
+  transition-property: width;
+}
+
+.prepare {
+  color: #996;
+}
+.progress {
+  color: #00a;
+  .progressBarBg {
+    background-color: lighten(#099, 60%);
+  }
+}
+.success {
+  color: #090;
+  .progressBarBg {
+    background-color: #090;
+  }
+}
+.error {
+  color: #900;
+  .progressBarBg {
+    background-color: #900;
+  }
+}

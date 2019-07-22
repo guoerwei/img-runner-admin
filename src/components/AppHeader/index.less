@@ -1,0 +1,40 @@
+.app-header {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #ff5375;
+  color: #fff;
+}
+
+.app-logo {
+  font-size: 24px;
+}
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.app-nav__item {
+  height: 100%;
+  padding: 0 10px;
+  text-decoration: none;
+  color: #fff;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+  &--current,
+  &:hover {
+    color: #ff5375;
+    background-color: #fff;
+  }
+}
+.app-nav__item + .app-nav__item {
+  margin-left: 10px;
+}

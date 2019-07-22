@@ -1,0 +1,31 @@
+.list-table {
+  border-collapse: collapse;
+
+  & > tbody > tr > th,
+  & > tbody > tr > td {
+    padding: 10px;
+  }
+  & > tbody > tr > th {
+    background-color: lighten(#ff5375, 30%);
+    text-align: left;
+  }
+  & > tbody > tr > td {
+    border-bottom: #eee 1px solid;
+  }
+}
+
+.column-table {
+  border-collapse: collapse;
+  & > tbody > tr > th,
+  & > tbody > tr > td {
+    padding: 10px;
+  }
+
+  & > tbody > tr > th {
+    text-align: right;
+  }
+
+  & > tbody > tr > td[colspan] {
+    text-align: center;
+  }
+}

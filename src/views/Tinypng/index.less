@@ -1,0 +1,23 @@
+@import "../../styles/_page.less";
+@import "../../styles/_buttons.less";
+
+.tinypng-page {
+  display: grid;
+  grid-gap: 20px;
+}
+
+.tinypng-page__title {
+  .page-title;
+}
+
+.tinypng-page__tips {
+  color: #999;
+  font-style: italic;
+}
+
+.tinypng-page__btn {
+  .primary-btn;
+}
+.tinypng-page__btn + .tinypng-page__btn {
+  margin-left: 10px;
+}

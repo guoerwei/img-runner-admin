@@ -1,0 +1,49 @@
+@import "../../../../styles/_table.less";
+@import "../../../../styles/_buttons.less";
+@import "../../../../styles/_inputs.less";
+
+.account-itemForm {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #00000066;
+  &::before,
+  &::after {
+    content: "";
+  }
+}
+
+.account-itemForm__content {
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #fff;
+}
+
+.account-itemForm__table {
+  .column-table;
+  min-width: 300px;
+}
+
+.account-itemForm__input {
+  .primary-input;
+}
+
+.account-itemForm__btn {
+  .primary-btn;
+}
+
+.account-itemForm__btn + .account-itemForm__btn {
+  margin-left: 30px;
+}
+
+.account-itemForm__btn--cancel {
+  .cancel-btn;
+}

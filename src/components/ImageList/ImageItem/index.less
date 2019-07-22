@@ -1,0 +1,77 @@
+.item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 10px;
+  grid-template-areas:
+    "face name"
+    "face size"
+    "face status";
+  align-items: center;
+  border: #ccc 1px dashed;
+  padding: 10px;
+  padding-left: 0;
+  background-color: #fff;
+  border-radius: 8px;
+
+  & > :nth-of-type(1) {
+    grid-area: face;
+    align-self: stretch;
+    padding: 10px;
+    background-origin: content-box;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  & > :nth-of-type(2) {
+    grid-area: name;
+  }
+  & > :nth-of-type(3) {
+    grid-area: size;
+  }
+  & > :nth-of-type(4) {
+    grid-area: status;
+  }
+  & > :nth-of-type(2),
+  & > :nth-of-type(3),
+  & > :nth-of-type(4) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 0;
+  }
+  & > :nth-of-type(4) {
+    display: flex;
+    justify-content: stretch;
+  }
+}
+
+.itemComplete {
+  composes: item;
+
+}
+
+.itemImcomplete {
+  composes: item;
+  & > :nth-of-type(1) {
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.btn {
+  color: #ff5375;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.btn + .btn {
+  margin-left: 5px;
+}
+
+.inputName {
+  width: 100%;
+  outline: none;
+  padding: 5px;
+}
