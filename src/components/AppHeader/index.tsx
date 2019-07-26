@@ -18,7 +18,9 @@ const navConfig = [
   },
 ];
 
-const AppHeader: FunctionComponent<RouteComponentProps> = props => {
+const AppHeader: FunctionComponent<RouteComponentProps> = (
+  props: RouteComponentProps,
+) => {
   return (
     <div className="app-header">
       <div className="app-logo">测试用的后台</div>

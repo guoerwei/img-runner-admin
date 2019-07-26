@@ -1,6 +1,6 @@
 import fetchAPI from "../utils/api-helper";
 
-export interface IImgItem {
+export interface ImgItem {
   id: number;
   name: string;
   originSize: number;
@@ -20,21 +20,24 @@ export interface IImgItem {
  * @param limit
  * @param last
  */
-export const fetchImageList = (limit: number, last: number = 0) => {
+export const fetchImageList = (
+  limit: number,
+  last: number = 0,
+): Promise<ImgItem[]> => {
   const res = fetchAPI("/api/img", {
     params: {
       limit,
       last,
     },
   });
-  return res as Promise<IImgItem[]>;
+  return res as Promise<ImgItem[]>;
 };
 
 /**
  * 查询图片的状态
  * @param ids
  */
-export const queryImageStatus = (ids: number[]) => {
+export const queryImageStatus = (ids: number[]): Promise<ImgItem[]> => {
   const res = fetchAPI("/api/img/status", {
     params: {
       imageIds: ids,
@@ -44,5 +47,5 @@ export const queryImageStatus = (ids: number[]) => {
     //   return params.imageIds.map((v: number) => `imageIds=${v}`).join("&");
     // },
   });
-  return res as Promise<IImgItem[]>;
+  return res as Promise<ImgItem[]>;
 };

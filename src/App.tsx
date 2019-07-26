@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { hot } from "react-hot-loader/root";
 import loadable from "react-loadable";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";

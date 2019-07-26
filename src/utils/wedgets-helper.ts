@@ -2,7 +2,7 @@
  * 将字符串转成dom
  * @param str
  */
-const str2dom = (str: string) => {
+const str2dom = (str: string): Element | null => {
   if (
     typeof Range === "undefined" ||
     !Range.prototype.createContextualFragment
@@ -18,7 +18,7 @@ const str2dom = (str: string) => {
   }
 };
 
-interface IToastOption {
+interface ToastOption {
   // type?: "notice" | "error" | "success";
   duration?: number;
 }
@@ -29,7 +29,11 @@ interface IToastOption {
  * @param options
  * @param options.duration
  */
-export const toast = (msg: string, { duration = 2000 }: IToastOption = {}) => {
+export const toast = (
+  msg: string,
+  { duration = 2000 }: ToastOption = {},
+): void => {
+  // eslint-disable-next-line
   const style = require("@src/styles/wedgets/toast.less?module");
   const dom = str2dom(`<div class="${style.toast}">
     <div class="${style.msg}">${msg}</div>
@@ -42,21 +46,21 @@ export const toast = (msg: string, { duration = 2000 }: IToastOption = {}) => {
   }
 };
 
-interface IBaseMsgboxOption {
+interface BaseMsgboxOption {
   showMask?: boolean;
   showClose?: boolean;
 }
 
-interface IMyAlertOption extends IBaseMsgboxOption {
+interface MyAlertOption extends BaseMsgboxOption {
   okText?: string;
 }
 
-interface IMyConfimOption extends IBaseMsgboxOption {
+interface MyConfimOption extends BaseMsgboxOption {
   okText?: string;
   cancelText?: string;
 }
 
-interface IMsgboxOption extends IMyAlertOption, IMyConfimOption {
+interface MsgboxOption extends MyAlertOption, MyConfimOption {
   showOk?: boolean;
   showCancel?: boolean;
 }
@@ -70,8 +74,9 @@ const getMsgBoxHTML = (
     showClose = true,
     showOk = true,
     showCancel = false,
-  }: IMsgboxOption,
-) => {
+  }: MsgboxOption,
+): string => {
+  // eslint-disable-next-line
   const style = require("@src/styles/wedgets/msgbox.less?module");
   const closeBtn = showClose ? `<a class="${style.close} J_close">X</a>` : "";
   const content = `<div class="${style.content}">${msg}</div>`;
@@ -93,7 +98,7 @@ const getMsgBoxHTML = (
 
 export const myAlert = (
   msg: string,
-  { showMask = true, okText = "确认", showClose = false }: IMyAlertOption = {},
+  { showMask = true, okText = "确认", showClose = false }: MyAlertOption = {},
 ): Promise<boolean> => {
   return new Promise(resolve => {
     const dom = str2dom(
@@ -107,7 +112,7 @@ export const myAlert = (
     const msgEle = dom.querySelector(".J_msgbox");
     const closeEle = dom.querySelector(".J_close");
     const okEle = dom.querySelector(".J_ok");
-    const clickHandler = (e: MouseEvent) => {
+    const clickHandler = (e: MouseEvent): void => {
       if (e.target) {
         const target = e.target as Element;
         const isOutOfMsg =
@@ -136,7 +141,7 @@ export const myConfirm = (
     okText = "确认",
     cancelText = "取消",
     showClose = false,
-  }: IMyConfimOption = {},
+  }: MyConfimOption = {},
 ): Promise<boolean> => {
   return new Promise(resolve => {
     const dom = str2dom(
@@ -153,7 +158,7 @@ export const myConfirm = (
     const closeEle = dom.querySelector(".J_close");
     const okEle = dom.querySelector(".J_ok");
     const cancelEle = dom.querySelector(".J_cancel");
-    const clickHandler = (e: MouseEvent) => {
+    const clickHandler = (e: MouseEvent): void => {
       if (e.target) {
         const target = e.target as Element;
         const isOutOfMsg =
@@ -190,6 +195,7 @@ export const myConfirm = (
 
 export const loading = {
   dom: (() => {
+    // eslint-disable-next-line
     const style = require("@src/styles/wedgets/loading.less?module");
     return str2dom(`<div class="${style.loading}"></div>`);
   })(),

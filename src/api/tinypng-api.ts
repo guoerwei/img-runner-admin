@@ -1,7 +1,7 @@
 import fetchAPI from "../utils/api-helper";
 
 // 字段列表，因为有可能是在新增的时候用，所以id不一定存在
-export interface ITinypngAccountItemFields {
+export interface TinypngAccountItemFields {
   id?: number;
   name: string;
   key: string;
@@ -9,30 +9,30 @@ export interface ITinypngAccountItemFields {
 }
 
 // id必须存在
-export interface ITinypngAccountItem extends ITinypngAccountItemFields {
+export interface TinypngAccountItem extends TinypngAccountItemFields {
   id: number;
 }
 
-export interface ITinypngAccountItemWithRemain extends ITinypngAccountItem {
+export interface TinypngAccountItemWithRemain extends TinypngAccountItem {
   remain: number;
 }
 
-interface ITinypngAccountList {
-  list: ITinypngAccountItemWithRemain[];
+interface TinypngAccountList {
+  list: TinypngAccountItemWithRemain[];
 }
 
 /**
  * 获取tinypng账号列表
  */
-export const fetchTinypngAccountList = () => {
-  const res = fetchAPI("/api/tinypng-account") as Promise<ITinypngAccountList>;
+export const fetchTinypngAccountList = (): Promise<TinypngAccountList> => {
+  const res = fetchAPI("/api/tinypng-account") as Promise<TinypngAccountList>;
   return res;
 };
 
 /**
  * 同步次数
  */
-export const syncTinypngAccount = () => {
+export const syncTinypngAccount = (): Promise<null> => {
   const res = fetchAPI("/api/tinypng-account/sync", { method: "POST" });
   return res;
 };
@@ -41,25 +41,29 @@ export const syncTinypngAccount = () => {
  * 删除一个账号
  * @param {number} id
  */
-export const removeTinypngAccount = (id: number) => {
+export const removeTinypngAccount = (id: number): Promise<null> => {
   const res = fetchAPI(`/api/tinypng-account/${id}`, { method: "DELETE" });
   return res;
 };
 
 /**
  * 添加一个账号
- * @param {ITinypngAccountItemFields} data
+ * @param {TinypngAccountItemFields} data
  */
-export const createTinypngAccount = (data: ITinypngAccountItemFields) => {
+export const createTinypngAccount = (
+  data: TinypngAccountItemFields,
+): Promise<null> => {
   const res = fetchAPI("/api/tinypng-account", { method: "POST", data });
   return res;
 };
 
 /**
  * 修改一个账号
- * @param {ITinypngAccountItem} data
+ * @param {TinypngAccountItem} data
  */
-export const updateTinypngAccount = (data: ITinypngAccountItem) => {
+export const updateTinypngAccount = (
+  data: TinypngAccountItem,
+): Promise<null> => {
   const res = fetchAPI(`/api/tinypng-account/${data.id}`, {
     method: "PUT",
     data,

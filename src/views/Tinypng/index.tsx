@@ -8,9 +8,9 @@ import {
   syncTinypngAccount,
   updateTinypngAccount,
   removeTinypngAccount,
-  ITinypngAccountItem,
-  ITinypngAccountItemFields,
-  ITinypngAccountItemWithRemain,
+  TinypngAccountItem,
+  TinypngAccountItemFields,
+  TinypngAccountItemWithRemain,
 } from "@src/api/tinypng-api";
 
 import { toast, myConfirm, loading } from "@src/utils/wedgets-helper";
@@ -20,16 +20,16 @@ import ItemForm from "./components/ItemForm";
 
 const TinypngPage: FunctionComponent<{}> = () => {
   const [itemFormData, setItemForm] = useState(
-    null as null | ITinypngAccountItemFields,
+    null as null | TinypngAccountItemFields,
   );
   const [accountList, updateAccountList] = useState(
-    [] as ITinypngAccountItemWithRemain[],
+    [] as TinypngAccountItemWithRemain[],
   );
 
   /**
    * 初始化数据
    */
-  const getListDataHandler = async () => {
+  const getListDataHandler = async (): Promise<void> => {
     try {
       const res = await fetchTinypngAccountList();
       updateAccountList(res.list);
@@ -50,7 +50,7 @@ const TinypngPage: FunctionComponent<{}> = () => {
   /**
    * 同步次数
    */
-  const syncHandler = async () => {
+  const syncHandler = async (): Promise<void> => {
     loading.show();
     try {
       await syncTinypngAccount();
@@ -66,7 +66,7 @@ const TinypngPage: FunctionComponent<{}> = () => {
    * 打开修改的弹窗
    * @param id
    */
-  const openUpdaterHandler = async (id: number) => {
+  const openUpdaterHandler = async (id: number): Promise<void> => {
     const data = accountList.find(v => v.id === id);
     if (data) {
       setItemForm(data);
@@ -76,26 +76,28 @@ const TinypngPage: FunctionComponent<{}> = () => {
   /**
    * 关闭修改的弹窗
    */
-  const closeItemFormHandler = () => {
+  const closeItemFormHandler = (): void => {
     setItemForm(null);
   };
 
   /**
    * 打开新增的弹窗
    */
-  const openCreatorHandler = () => {
+  const openCreatorHandler = (): void => {
     setItemForm({ name: "", key: "", monthlyLimit: 0 });
   };
 
   /**
    * 提交
-   * @param {ITinypngAccountItemFields} data
+   * @param {TinypngAccountItemFields} data
    */
-  const submitItemFormHandler = async (data: ITinypngAccountItemFields) => {
+  const submitItemFormHandler = async (
+    data: TinypngAccountItemFields,
+  ): Promise<void> => {
     loading.show();
     try {
       if (data.id) {
-        await updateTinypngAccount(data as ITinypngAccountItem);
+        await updateTinypngAccount(data as TinypngAccountItem);
       } else {
         await createTinypngAccount(data);
       }
@@ -114,7 +116,7 @@ const TinypngPage: FunctionComponent<{}> = () => {
    * 删除一个账号
    * @param {number} id
    */
-  const removeHandler = async (id: number) => {
+  const removeHandler = async (id: number): Promise<void> => {
     if (await myConfirm("确认删除")) {
       loading.show();
       try {

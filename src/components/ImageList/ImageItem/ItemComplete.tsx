@@ -3,32 +3,32 @@ import copy from "clipboard-copy";
 
 import { formatFileSize, readBase64FromURL } from "@src/utils/file-helper";
 
-import { IImgItem } from "@src/api/img-api";
+import { ImgItem } from "@src/api/img-api";
 import { toast, myAlert } from "@src/utils/wedgets-helper";
 
-interface IProps {
-  item: IImgItem;
+interface Props {
+  item: ImgItem;
 }
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 const style = require("./index.less?module");
 
-const getPreviewURL = (item: IImgItem) => {
+const getPreviewURL = (item: ImgItem): string => {
   const name = item.thumb || item.name;
   return `https://${item.path}/${name}`;
 };
 
-const ItemComplete: FunctionComponent<IProps> = ({ item }: IProps) => {
+const ItemComplete: FunctionComponent<Props> = ({ item }: Props) => {
   const originSize = formatFileSize(item.originSize);
   const size = formatFileSize(item.size);
   // const showBase64 = item.size < 20 * 1024;
   const showBase64 = true;
 
-  const openImg = () => {
+  const openImg = (): void => {
     window.open(`https://${item.path}/${item.name}`);
   };
 
-  const copyImg = async () => {
+  const copyImg = async (): Promise<void> => {
     try {
       await copy(`https://${item.path}/${item.name}`);
       toast("已经复制至剪贴板");
@@ -38,7 +38,7 @@ const ItemComplete: FunctionComponent<IProps> = ({ item }: IProps) => {
     }
   };
 
-  const copyBase64 = async () => {
+  const copyBase64 = async (): Promise<void> => {
     const url = `https://${item.path}/${item.name}`;
     const str = await readBase64FromURL(url);
     try {

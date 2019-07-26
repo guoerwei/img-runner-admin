@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState } from "react";
 
-import { ICompressConfig } from "@src/api/upload-api";
+import { CompressConfig } from "@src/api/upload-api";
 
 import UploadingItem from "./UpoadingItem";
 
@@ -12,27 +12,27 @@ const optimizationLevelGroup = [
   { value: 4, text: "重度压缩" },
 ];
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 const style = require("./index.less?module");
 
-interface IUploadItem {
+interface UploadItem {
   file: File;
   key: number;
 }
 
-interface IProps {
+interface Props {
   album?: number;
 }
 
-const Uploader: FunctionComponent<IProps> = ({ album }: IProps) => {
+const Uploader: FunctionComponent<Props> = ({ album }: Props) => {
   const [isDragOver, updateDragOver] = useState(false);
   const [optimizationLevel, setOptimizationLevel] = useState(
-    3 as ICompressConfig["optimizationLevel"],
+    3 as CompressConfig["optimizationLevel"],
   );
-  const [uploadList, setUploadList] = useState([] as IUploadItem[]);
+  const [uploadList, setUploadList] = useState([] as UploadItem[]);
   const onChangeHandler = async (
     e: React.DragEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  ): Promise<void> => {
     e.preventDefault();
     const target = e.currentTarget;
     target.value = "";
@@ -44,7 +44,9 @@ const Uploader: FunctionComponent<IProps> = ({ album }: IProps) => {
       })),
     ]);
   };
-  const onDropHandler = async (e: React.DragEvent<HTMLLabelElement>) => {
+  const onDropHandler = async (
+    e: React.DragEvent<HTMLLabelElement>,
+  ): Promise<void> => {
     e.preventDefault();
     const target = e.dataTransfer;
     setUploadList([
@@ -55,24 +57,24 @@ const Uploader: FunctionComponent<IProps> = ({ album }: IProps) => {
       ...uploadList,
     ]);
   };
-  const onDragOverHandler = (e: React.DragEvent<HTMLLabelElement>) => {
+  const onDragOverHandler = (e: React.DragEvent<HTMLLabelElement>): void => {
     e.preventDefault();
     updateDragOver(true);
   };
-  const onDragLeaveHandler = (e: React.DragEvent<HTMLLabelElement>) => {
+  const onDragLeaveHandler = (e: React.DragEvent<HTMLLabelElement>): void => {
     e.preventDefault();
     updateDragOver(false);
   };
   const onOptimizationLevelChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  ): void => {
     setOptimizationLevel(parseInt(
       e.currentTarget.value,
       10,
-    ) as ICompressConfig["optimizationLevel"]);
+    ) as CompressConfig["optimizationLevel"]);
   };
 
-  const onUploaded = (name: string) => {
+  const onUploaded = (name: string): void => {
     console.log("on uploaded", name);
   };
 

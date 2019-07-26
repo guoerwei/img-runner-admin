@@ -5,14 +5,16 @@ import axios, { AxiosRequestConfig } from "axios";
 // import { Subject, Subscriber } from "rxjs";
 // import { merge } from "rxjs/operators";
 
-interface IApiError extends Error {
-  data: string[];
-}
-class ApiError extends Error implements IApiError {
+class ApiError extends Error {
   public data = [];
 }
 
-const fetchAPI = async (url: string, config: AxiosRequestConfig = {}) => {
+const fetchAPI = async (
+  url: string,
+  config: AxiosRequestConfig = {},
+  // 目前确实无法判断返回接口具体格式
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any> => {
   const headers = {
     ...(config.headers || {}),
   };

@@ -1,28 +1,28 @@
 import React, { FunctionComponent } from "react";
 
-import { ITinypngAccountItemWithRemain } from "@src/api/tinypng-api";
+import { TinypngAccountItemWithRemain } from "@src/api/tinypng-api";
 
 import "./index.less";
 
-interface IProps {
-  list: ITinypngAccountItemWithRemain[];
+interface Props {
+  list: TinypngAccountItemWithRemain[];
   updateHandler: (id: number) => void;
   removeHandler: (id: number) => void;
 }
 
-const AccountList: FunctionComponent<IProps> = ({
+const AccountList: FunctionComponent<Props> = ({
   list,
   updateHandler,
   removeHandler,
 }) => {
   if (list.length) {
-    const onUpdate = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
+    const onUpdate = (e: React.SyntheticEvent<HTMLAnchorElement>): void => {
       const id = parseInt(e.currentTarget.dataset.id || "", 10);
       if (id) {
         updateHandler(id);
       }
     };
-    const onRemove = (e: React.SyntheticEvent<HTMLAnchorElement>) => {
+    const onRemove = (e: React.SyntheticEvent<HTMLAnchorElement>): void => {
       const id = parseInt(e.currentTarget.dataset.id || "", 10);
       if (id) {
         removeHandler(id);

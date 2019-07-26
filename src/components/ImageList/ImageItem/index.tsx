@@ -1,15 +1,15 @@
 import React, { FunctionComponent } from "react";
 
-import { IImgItem } from "@src/api/img-api";
+import { ImgItem } from "@src/api/img-api";
 
 import ItemComplete from "./ItemComplete";
 import ItemImcomplete from "./ItemImcomplete";
 
-interface IProps {
-  item: IImgItem;
+interface Props {
+  item: ImgItem;
 }
 
-const ImageItem: FunctionComponent<IProps> = ({ item }: IProps) => {
+const ImageItem: FunctionComponent<Props> = ({ item }: Props) => {
   if (item.status === 7) {
     return <ItemComplete item={item} />;
   } else {

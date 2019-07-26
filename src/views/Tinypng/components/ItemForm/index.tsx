@@ -1,27 +1,27 @@
 import React, { FunctionComponent, useState } from "react";
 
-import { ITinypngAccountItemFields } from "@src/api/tinypng-api";
+import { TinypngAccountItemFields } from "@src/api/tinypng-api";
 
 import "./index.less";
 
-interface IProps {
-  data: ITinypngAccountItemFields;
-  submitHandler: (data: ITinypngAccountItemFields) => void;
+interface Props {
+  data: TinypngAccountItemFields;
+  submitHandler: (data: TinypngAccountItemFields) => void;
   cancelHandler: () => void;
 }
 
-const TinypngItemForm: FunctionComponent<IProps> = ({
+const TinypngItemForm: FunctionComponent<Props> = ({
   data,
   submitHandler,
   cancelHandler,
-}) => {
+}: Props) => {
   const [formData, updateFormData] = useState(data);
 
-  const onUpdate = () => {
+  const onUpdate = (): void => {
     submitHandler(formData);
   };
 
-  const onChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+  const onChange = (e: React.SyntheticEvent<HTMLInputElement>): void => {
     const key = e.currentTarget.dataset.key as "name" | "key" | "monthlyLimit";
     const value = e.currentTarget.value;
     updateFormData({

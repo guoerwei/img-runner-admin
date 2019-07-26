@@ -1,5 +1,3 @@
-import { read } from "fs";
-
 export const readImg = async (src: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -96,12 +94,12 @@ export const readBase64FromURL = async (src: string): Promise<string> => {
   });
 };
 
-interface IFileSize {
+interface FileSize {
   bytes: number;
   unit: "MB" | "KB" | "B";
   format: string;
 }
-export const formatFileSize = (bytes: number): IFileSize => {
+export const formatFileSize = (bytes: number): FileSize => {
   if (bytes > 1000000) {
     return {
       bytes,

@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react";
 
-import { IImgItem } from "@src/api/img-api";
+import { ImgItem } from "@src/api/img-api";
 
-interface IProps {
-  item: IImgItem;
+interface Props {
+  item: ImgItem;
 }
 
-const getStatusText = (item: IImgItem) => {
+const getStatusText = (item: ImgItem): string => {
   const map: { [key: number]: string } = {
     1: "待处理",
     2: "压缩中",
@@ -20,10 +20,10 @@ const getStatusText = (item: IImgItem) => {
   return map[item.status];
 };
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 const style = require("./index.less?module");
 
-const ItemImcomplete: FunctionComponent<IProps> = ({ item }: IProps) => {
+const ItemImcomplete: FunctionComponent<Props> = ({ item }: Props) => {
   return (
     <div className={style.itemImcomplete}>
       <div>无预览</div>

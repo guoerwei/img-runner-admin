@@ -1,24 +1,24 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 
 import { formatFileSize, readImgFromFile } from "@src/utils/file-helper";
-import { ICompressConfig, uploadFile } from "@src/api/upload-api";
+import { CompressConfig, uploadFile } from "@src/api/upload-api";
 
-interface IProps {
+interface Props {
   file: File;
-  config: ICompressConfig;
+  config: CompressConfig;
   album?: number;
   afterUpladHandler: (name: string) => void;
 }
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 const style = require("./index.less?module");
 
-const UpoadingItem: FunctionComponent<IProps> = ({
+const UpoadingItem: FunctionComponent<Props> = ({
   file,
   album,
   config = {},
   afterUpladHandler,
-}: IProps) => {
+}: Props) => {
   const [status, setStatus] = useState(1);
   const [preview, setPreview] = useState(null as HTMLImageElement | null);
   const [percent, setPercent] = useState(0);
@@ -27,7 +27,7 @@ const UpoadingItem: FunctionComponent<IProps> = ({
   const fileSize = formatFileSize(file.size);
 
   useEffect(() => {
-    const checkFile = () => {
+    const checkFile = (): void => {
       if (
         ![
           "image/png",
@@ -44,7 +44,7 @@ const UpoadingItem: FunctionComponent<IProps> = ({
       }
     };
 
-    const fileHandler = async () => {
+    const fileHandler = async (): Promise<void> => {
       try {
         checkFile();
         const getPreview = await readImgFromFile(file);

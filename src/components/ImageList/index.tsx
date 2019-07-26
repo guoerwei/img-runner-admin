@@ -1,37 +1,40 @@
 import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 
-import { fetchImageList, queryImageStatus, IImgItem } from "@src/api/img-api";
+import { fetchImageList, queryImageStatus, ImgItem } from "@src/api/img-api";
 
 import ImageItem from "./ImageItem";
 
-interface IProps {
+interface Props {
   album?: number;
   perPage?: number; // 每页多少
   tickList?: number[]; // 需要轮询的文件列表
 }
 
-// tslint:disable-next-line
+// eslint-disable-next-line
 const style = require("./index.less?module");
 
-interface ITickData {
-  tickRes: IImgItem[];
+interface TickData {
+  tickRes: ImgItem[];
 }
 // 定时查询处理中的图片状态
 const useTickData = (
   initList: number[],
-): [ITickData, React.Dispatch<React.SetStateAction<number[]>>] => {
+): [TickData, React.Dispatch<React.SetStateAction<number[]>>] => {
   const runningList = useRef<number[]>(initList);
-  const [tickRes, setTickRes] = useState([] as IImgItem[]);
+  const [tickRes, setTickRes] = useState([] as ImgItem[]);
   const [list, appendToList] = useState([] as number[]);
+  const updateRunningList = (list: number[]): void => {
+    runningList.current = list;
+  };
   useEffect(() => {
-    runningList.current = [...runningList.current, ...list];
+    updateRunningList([...runningList.current, ...list]);
   }, [list]);
   useEffect(() => {
     const timer = window.setInterval(async () => {
       if (runningList.current.length) {
         const res = await queryImageStatus(runningList.current);
         const remainIds = res.filter(v => ![7, 8].includes(v.status));
-        runningList.current = remainIds.map(v => v.id);
+        updateRunningList(remainIds.map(v => v.id));
         setTickRes(res);
       }
     }, 3000);
@@ -42,17 +45,17 @@ const useTickData = (
   return [{ tickRes }, appendToList];
 };
 
-const ImageList: FunctionComponent<IProps> = ({
+const ImageList: FunctionComponent<Props> = ({
   perPage = 30,
   tickList = [],
-}: IProps) => {
+}: Props) => {
   const loadMoreEl = useRef<HTMLDivElement>(null);
-  const [imageList, setImageList] = useState([] as IImgItem[]);
+  const [imageList, setImageList] = useState([] as ImgItem[]);
   const [isEnd, setIsEnd] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [{ tickRes }, appendToTickList] = useTickData(tickList);
 
-  const getListData = async () => {
+  const getListData = async (): Promise<void> => {
     const last = imageList.length ? imageList[imageList.length - 1].id : 0;
     const res = await fetchImageList(perPage, last);
     setImageList([...imageList, ...res]);
@@ -90,7 +93,7 @@ const ImageList: FunctionComponent<IProps> = ({
 
   // 触发加载更多
   useEffect(() => {
-    const scrollHandler = () => {
+    const scrollHandler = (): void => {
       // 根据滚动条，判断现在是否需要进行加载新数据
       if (isLoading || isEnd || !loadMoreEl.current) {
         return;
